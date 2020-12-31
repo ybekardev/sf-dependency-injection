@@ -1,0 +1,39 @@
+Interface Segregation Principle
+Interfaces form a core part of the Java programming language and they are extensively used in enterprise applications
+to achieve abstraction and to support multiple inheritance of type- the ability of a class to implement more than one interfaces.
+
+Consider the requirements of an application that builds different types of toys. Each toy will have a price and color.
+Some toys, such as a toy car or toy train can additionally move, while some toys, such as a toy plane can both move and fly.
+An interface to define the behaviors of toys is this.
+
+Toy.java
+public interface Toy {
+    void setPrice(double price);
+    void setColor(String color);
+    void move();
+    void fly();
+}
+
+A class that represents a toy plane can implement the Toy interface and provide implementations of all the interface methods.
+But, imagine a class that represents a toy house. This is how the ToyHouse class will look.
+
+ToyHouse.java
+public class ToyHouse implements Toy {
+    double price;
+    String color;
+    @Override
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    @Override
+    public void setColor(String color) {
+        this.color=color;
+    }
+    @Override
+    public void move(){}
+    @Override
+    public void fly(){}
+}
+
+As you can see in the code, ToyHouse needs to provide implementation of the move() and fly() methods, even though
+it does not require them. This is a violation of the Interface Segregation Principle.

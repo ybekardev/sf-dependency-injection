@@ -1,15 +1,19 @@
 package guru.springframework.sfgdi.opencloseprinciple;
 
+import org.junit.jupiter.api.Test;
+
 public class ClaimApprovalManagerTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void testProcessClaim() throws Exception {
 
         ClaimApprovalManager claimApprovalManager = new ClaimApprovalManager();
 
         HealthInsuranceSurveyor healthInsuranceSurveyor = new HealthInsuranceSurveyor();
-        VehicleInsuranceSurveyor vehicleInsuranceSurveyor = new VehicleInsuranceSurveyor();
-
         claimApprovalManager.processClaim(healthInsuranceSurveyor);
+
+        VehicleInsuranceSurveyor vehicleInsuranceSurveyor = new VehicleInsuranceSurveyor();
         claimApprovalManager.processClaim(vehicleInsuranceSurveyor);
+
     }
 }
