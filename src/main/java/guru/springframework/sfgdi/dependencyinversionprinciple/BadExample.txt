@@ -1,0 +1,65 @@
+Dependency Inversion Principle
+As a Java programmer, you’ve likely heard about code coupling and have been told to avoid tightly coupled code.
+Ignorance of writing “good code” is the main reason of tightly coupled code existing in applications.
+As an example, creating an object of a class using the new operator results in a class being tightly coupled to another class.
+Such coupling appears harmless and does not disrupt small programs. But, as you move into enterprise application development,
+tightly coupled code can lead to serious adverse consequences. Conventional application architecture follows
+a top-down design approach where a high-level problem is broken into smaller parts.
+
+Dependency Inversion Principle states:
+A. High-level modules should not depend on low-level modules. Both should depend on abstractions.
+B. Abstractions should not depend on details. Details should depend on abstractions.
+
+Consider the example of an electric switch that turns a light bulb on or off. We can model this requirement by creating two classes:
+ElectricPowerSwitch and LightBulb. Let’s write the LightBulb class first.
+
+LightBulb.java
+public class LightBulb {
+    public void turnOn() {
+        System.out.println("LightBulb: Bulb turned on...");
+    }
+    public void turnOff() {
+        System.out.println("LightBulb: Bulb turned off...");
+    }
+}
+In the LightBulb class above, we wrote the turnOn() and turnOff() methods to turn a bulb on and off.
+
+Next, we will write the ElectricPowerSwitch class.
+
+ElectricPowerSwitch.java
+public class ElectricPowerSwitch {
+    public LightBulb lightBulb;
+    public boolean on;
+    public ElectricPowerSwitch(LightBulb lightBulb) {
+        this.lightBulb = lightBulb;
+        this.on = false;
+    }
+    public boolean isOn() {
+        return this.on;
+    }
+    public void press(){
+        boolean checkOn = isOn();
+        if (checkOn) {
+            lightBulb.turnOff();
+            this.on = false;
+        } else {
+            lightBulb.turnOn();
+            this.on = true;
+        }
+
+    }
+}
+
+In the example above, we wrote the ElectricPowerSwitch class with a field referencing LightBulb. In the constructor,
+we created a LightBulb object and assigned it to the field. We then wrote a isOn() method that returns the state of
+ElectricPowerSwitch as a boolean value. In the press() method, based on the state, we called the turnOn() and turnOff() methods.
+
+Our switch is now ready for use to turn on and off the light bulb. But the mistake we did is apparent.
+Our high-level ElectricPowerSwitch class is directly dependent on the low-level LightBulb class.
+if you see in the code, the LightBulb class is hardcoded in ElectricPowerSwitch. But, a switch should not be tied to a bulb.
+It should be able to turn on and off other appliances and devices too, say a fan, an AC etc.
+
+Dependency Inversion is more focused on the structure of your code, its focus is keeping your code loosely coupled.
+On the other hand, Dependency Injection is how the code functionally works. When programming with the Spring Framework,
+Spring is using Dependency Injection to assemble your application.
+Dependency Inversion is what decouples your code so Spring can use Dependency Injection at run time.
